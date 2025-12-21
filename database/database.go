@@ -3,7 +3,6 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 
@@ -14,11 +13,10 @@ import (
 
 var Conn *sql.DB
 
-func Init() {
-	conn, err := sql.Open("mysql", "yno@unix(/run/mysqld/mysqld.sock)/ynodb?parseTime=true")
+func InitDatabaseConn(user, password, addr, database string) {
+	conn, err := sql.Open("mysql", fmt.Sprintf("%s:%s@%s/%s?parseTime=true", user, password, addr, database))
 	if err != nil {
-		log.Fatal(err)
-		return
+		panic(err)
 	}
 
 	Conn = conn

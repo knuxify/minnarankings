@@ -1,0 +1,11 @@
+## Database user
+#db_user: ""
+
+## Database user password
+#db_pass: ""
+
+## Database server address
+#db_addr: ""
+
+## Database name
+#db_name: ""
