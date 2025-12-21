@@ -2,15 +2,20 @@ package cli
 
 import (
 	"flag"
+	"os"
+
 	"github.com/ynoproject/ynorankings/common"
 	"github.com/ynoproject/ynorankings/database"
-	"os"
 )
 
 const (
 	CommandNone = iota
 	CommandUpdateRankings
 	CommandInvalid = -1
+)
+
+var (
+	config         *common.Config
 )
 
 type Cli struct {
@@ -48,7 +53,11 @@ func Run() {
 
 func parse() (flags Cli) {
 	// no flags yet
+	configFile := flag.String("config", "config.yml", "Path to the configuration file")
 	flag.Parse()
+
+	config = common.ParseConfigFile(*configFile)
+	database.InitDatabaseConn(config.DbUser, config.DbPass, config.DbAddr, config.DbName)
 
 	args := flag.Args()
 	if len(args) == 0 {
